@@ -31,7 +31,7 @@ from tobrot import (
 
 from pyrogram import Client, Filters, MessageHandler, CallbackQueryHandler
 
-from tobrot.plugins.new_join_fn import new_join_f, help_message_f, rename_message_f
+from tobrot.plugins.new_join_fn import rename_message_f
 from tobrot.plugins.incoming_message_fn import incoming_message_f, incoming_youtube_dl_f, incoming_purge_message_f
 from tobrot.plugins.rclone_size import check_size_g
 from tobrot.plugins.status_message_fn import (
@@ -135,18 +135,6 @@ if __name__ == "__main__" :
         filters=Filters.command(["help"]) & Filters.chat(chats=AUTH_CHANNEL)
     )
     app.add_handler(help_text_handler)
-    #
-    new_join_handler = MessageHandler(
-        new_join_f,
-        filters=~Filters.chat(chats=AUTH_CHANNEL)
-    )
-    app.add_handler(new_join_handler)
-    #
-    group_new_join_handler = MessageHandler(
-        help_message_f,
-        filters=Filters.chat(chats=AUTH_CHANNEL) & Filters.new_chat_members
-    )
-    app.add_handler(group_new_join_handler)
     #
     call_back_button_handler = CallbackQueryHandler(
         button
