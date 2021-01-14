@@ -27,6 +27,8 @@ from tobrot import (
     CUSTOM_FILE_NAME
 )
 
+tracker_list=$(curl -Ns https://trackerslist.com/all_aria2.txt)
+tracker_list=$(curl -Ns https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt | awk '$1' | tr '\n' ',')
 
 async def aria_start():
     aria2_daemon_start_cmd = []
@@ -48,6 +50,15 @@ async def aria_start():
     aria2_daemon_start_cmd.append("--seed-time=1")
     aria2_daemon_start_cmd.append("--split=10")
     aria2_daemon_start_cmd.append(f"--bt-stop-timeout={MAX_TIME_TO_WAIT_FOR_TORRENTS_TO_START}")
+    aria2_daemon_start_cmd.append("--bt-tracker="[$tracker_list]"")
+    aria2_daemon_start_cmd.append(""--peer-id-prefix=-qB4220-)
+    aria2_daemon_start_cmd.append("--user-agent=qBittorrent/4.2.2")
+    aria2_daemon_start_cmd.append("--content-disposition-default-utf8=true")
+    aria2_daemon_start_cmd.append("--bt-force-encryption=true")
+    aria2_daemon_start_cmd.append("--bt-require-crypto=true")
+    aria2_daemon_start_cmd.append("--bt-min-crypto-level=arc4")
+    aria2_daemon_start_cmd.append("--daemon=true")
+    aria2_daemon_start_cmd.append("--http-accept-gzip=true")
     #
     LOGGER.info(aria2_daemon_start_cmd)
     #
